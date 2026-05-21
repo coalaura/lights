@@ -22,6 +22,8 @@ public class LightsConfig {
 	public int horizontalRadius = 24;
 	public int verticalRadius = 32;
 
+	public boolean showOptimalTorches = false;
+
 	public LightsConfig() {
 		load();
 	}
@@ -42,6 +44,8 @@ public class LightsConfig {
 				if (loaded.verticalRadius > 0) {
 					this.verticalRadius = loaded.verticalRadius;
 				}
+
+				this.showOptimalTorches = loaded.showOptimalTorches;
 			} catch (Exception e) {
 				// ignored, keep defaults
 			}

@@ -84,6 +84,77 @@ public class LightsMixin {
 				.setNormal(1, 0, 0);
 	}
 
+	private void drawTorch(VertexConsumer buffer, Matrix4f matrix, BlockPos pos, float cx, float cy, float cz, int r,
+			int g, int b, int a, float u0, float u1, float v0, float v1, int overlay, int light) {
+		float x = pos.getX() - cx;
+		float y = pos.getY() - cy;
+		float z = pos.getZ() - cz;
+
+		float minX = x + 0.4f, maxX = x + 0.6f;
+		float minY = y + 0.0f, maxY = y + 0.6f;
+		float minZ = z + 0.4f, maxZ = z + 0.6f;
+
+		// Top
+		buffer.addVertex(matrix, minX, maxY, minZ).setColor(r, g, b, a).setUv(u0, v0).setOverlay(overlay)
+				.setLight(light).setNormal(0, 1, 0);
+		buffer.addVertex(matrix, minX, maxY, maxZ).setColor(r, g, b, a).setUv(u0, v1).setOverlay(overlay)
+				.setLight(light).setNormal(0, 1, 0);
+		buffer.addVertex(matrix, maxX, maxY, maxZ).setColor(r, g, b, a).setUv(u1, v1).setOverlay(overlay)
+				.setLight(light).setNormal(0, 1, 0);
+		buffer.addVertex(matrix, maxX, maxY, minZ).setColor(r, g, b, a).setUv(u1, v0).setOverlay(overlay)
+				.setLight(light).setNormal(0, 1, 0);
+
+		// Bottom
+		buffer.addVertex(matrix, maxX, minY, minZ).setColor(r, g, b, a).setUv(u0, v0).setOverlay(overlay)
+				.setLight(light).setNormal(0, -1, 0);
+		buffer.addVertex(matrix, maxX, minY, maxZ).setColor(r, g, b, a).setUv(u0, v1).setOverlay(overlay)
+				.setLight(light).setNormal(0, -1, 0);
+		buffer.addVertex(matrix, minX, minY, maxZ).setColor(r, g, b, a).setUv(u1, v1).setOverlay(overlay)
+				.setLight(light).setNormal(0, -1, 0);
+		buffer.addVertex(matrix, minX, minY, minZ).setColor(r, g, b, a).setUv(u1, v0).setOverlay(overlay)
+				.setLight(light).setNormal(0, -1, 0);
+
+		// North (-Z)
+		buffer.addVertex(matrix, minX, maxY, minZ).setColor(r, g, b, a).setUv(u0, v0).setOverlay(overlay)
+				.setLight(light).setNormal(0, 0, -1);
+		buffer.addVertex(matrix, minX, minY, minZ).setColor(r, g, b, a).setUv(u0, v1).setOverlay(overlay)
+				.setLight(light).setNormal(0, 0, -1);
+		buffer.addVertex(matrix, maxX, minY, minZ).setColor(r, g, b, a).setUv(u1, v1).setOverlay(overlay)
+				.setLight(light).setNormal(0, 0, -1);
+		buffer.addVertex(matrix, maxX, maxY, minZ).setColor(r, g, b, a).setUv(u1, v0).setOverlay(overlay)
+				.setLight(light).setNormal(0, 0, -1);
+
+		// South (+Z)
+		buffer.addVertex(matrix, maxX, maxY, maxZ).setColor(r, g, b, a).setUv(u0, v0).setOverlay(overlay)
+				.setLight(light).setNormal(0, 0, 1);
+		buffer.addVertex(matrix, maxX, minY, maxZ).setColor(r, g, b, a).setUv(u0, v1).setOverlay(overlay)
+				.setLight(light).setNormal(0, 0, 1);
+		buffer.addVertex(matrix, minX, minY, maxZ).setColor(r, g, b, a).setUv(u1, v1).setOverlay(overlay)
+				.setLight(light).setNormal(0, 0, 1);
+		buffer.addVertex(matrix, minX, maxY, maxZ).setColor(r, g, b, a).setUv(u1, v0).setOverlay(overlay)
+				.setLight(light).setNormal(0, 0, 1);
+
+		// West (-X)
+		buffer.addVertex(matrix, minX, maxY, maxZ).setColor(r, g, b, a).setUv(u0, v0).setOverlay(overlay)
+				.setLight(light).setNormal(-1, 0, 0);
+		buffer.addVertex(matrix, minX, minY, maxZ).setColor(r, g, b, a).setUv(u0, v1).setOverlay(overlay)
+				.setLight(light).setNormal(-1, 0, 0);
+		buffer.addVertex(matrix, minX, minY, minZ).setColor(r, g, b, a).setUv(u1, v1).setOverlay(overlay)
+				.setLight(light).setNormal(-1, 0, 0);
+		buffer.addVertex(matrix, minX, maxY, minZ).setColor(r, g, b, a).setUv(u1, v0).setOverlay(overlay)
+				.setLight(light).setNormal(-1, 0, 0);
+
+		// East (+X)
+		buffer.addVertex(matrix, maxX, maxY, minZ).setColor(r, g, b, a).setUv(u0, v0).setOverlay(overlay)
+				.setLight(light).setNormal(1, 0, 0);
+		buffer.addVertex(matrix, maxX, minY, minZ).setColor(r, g, b, a).setUv(u0, v1).setOverlay(overlay)
+				.setLight(light).setNormal(1, 0, 0);
+		buffer.addVertex(matrix, maxX, minY, maxZ).setColor(r, g, b, a).setUv(u1, v1).setOverlay(overlay)
+				.setLight(light).setNormal(1, 0, 0);
+		buffer.addVertex(matrix, maxX, maxY, maxZ).setColor(r, g, b, a).setUv(u1, v0).setOverlay(overlay)
+				.setLight(light).setNormal(1, 0, 0);
+	}
+
 	@Inject(method = "renderLevel", at = @At("HEAD"))
 	private void renderLightOverlays(GraphicsResourceAllocator allocator, DeltaTracker deltaTracker,
 			boolean renderBlockOutline, Camera camera, Matrix4f positionMatrix, Matrix4f projectionMatrix,
@@ -123,6 +194,12 @@ public class LightsMixin {
 
 		for (BlockPos pos : Lights.dangerousBlocks) {
 			drawCarpet(buffer, matrix, pos, cx, cy, cz, 255, 0, 0, alpha, u0, u1, v0, v1, overlay, light);
+		}
+
+		if (Lights.config.showOptimalTorches) {
+			for (BlockPos pos : Lights.optimalTorches) {
+				drawTorch(buffer, matrix, pos, cx, cy, cz, 255, 200, 0, 200, u0, u1, v0, v1, overlay, light);
+			}
 		}
 	}
 }

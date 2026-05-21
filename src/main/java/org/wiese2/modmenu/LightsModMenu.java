@@ -33,6 +33,9 @@ public class LightsModMenu implements ModMenuApi {
 		private final int originalVerticalRadius;
 		private int verticalRadius;
 
+		private final boolean originalShowOptimalTorches;
+		private boolean showOptimalTorches;
+
 		private static final int[] H_OPTIONS = { 8, 16, 24, 32, 48, 64 };
 		private static final int[] V_OPTIONS = { 8, 16, 24, 32, 48, 64, 96, 128 };
 
@@ -43,10 +46,15 @@ public class LightsModMenu implements ModMenuApi {
 
 			this.visibilityMode = Lights.config.visibilityMode;
 			this.originalVisibilityMode = this.visibilityMode;
+
 			this.horizontalRadius = Lights.config.horizontalRadius;
 			this.originalHorizontalRadius = this.horizontalRadius;
+
 			this.verticalRadius = Lights.config.verticalRadius;
 			this.originalVerticalRadius = this.verticalRadius;
+
+			this.showOptimalTorches = Lights.config.showOptimalTorches;
+			this.originalShowOptimalTorches = this.showOptimalTorches;
 		}
 
 		private int nextOption(int current, int[] options) {
@@ -94,12 +102,21 @@ public class LightsModMenu implements ModMenuApi {
 				btn.setMessage(Component.literal(String.valueOf(verticalRadius)));
 			}).bounds(buttonX, rowY + 60, buttonW, buttonH).build());
 
+			addRenderableWidget(Button.builder(Component.literal(showOptimalTorches ? "On" : "Off"), btn -> {
+				showOptimalTorches = !showOptimalTorches;
+
+				Lights.config.showOptimalTorches = showOptimalTorches;
+
+				btn.setMessage(Component.literal(showOptimalTorches ? "On" : "Off"));
+			}).bounds(buttonX, rowY + 90, buttonW, buttonH).build());
+
 			int bottomY = this.height - 30;
 
 			addRenderableWidget(Button.builder(Component.literal("Cancel"), btn -> {
 				Lights.config.visibilityMode = originalVisibilityMode;
 				Lights.config.horizontalRadius = originalHorizontalRadius;
 				Lights.config.verticalRadius = originalVerticalRadius;
+				Lights.config.showOptimalTorches = originalShowOptimalTorches;
 
 				this.minecraft.setScreen(parent);
 			}).bounds(startX, bottomY, buttonW, buttonH).build());
@@ -108,6 +125,7 @@ public class LightsModMenu implements ModMenuApi {
 				Lights.config.visibilityMode = visibilityMode;
 				Lights.config.horizontalRadius = horizontalRadius;
 				Lights.config.verticalRadius = verticalRadius;
+				Lights.config.showOptimalTorches = showOptimalTorches;
 
 				Lights.config.save();
 
@@ -134,6 +152,7 @@ public class LightsModMenu implements ModMenuApi {
 			graphics.drawString(this.font, Component.literal("Visibility Mode"), startX, rowY + 6, 0xFFFFFFFF);
 			graphics.drawString(this.font, Component.literal("Horizontal Radius"), startX, rowY + 36, 0xFFFFFFFF);
 			graphics.drawString(this.font, Component.literal("Vertical Radius"), startX, rowY + 66, 0xFFFFFFFF);
+			graphics.drawString(this.font, Component.literal("Show Optimal Torches"), startX, rowY + 96, 0xFFFFFFFF);
 		}
 
 		@Override
@@ -141,6 +160,7 @@ public class LightsModMenu implements ModMenuApi {
 			Lights.config.visibilityMode = originalVisibilityMode;
 			Lights.config.horizontalRadius = originalHorizontalRadius;
 			Lights.config.verticalRadius = originalVerticalRadius;
+			Lights.config.showOptimalTorches = originalShowOptimalTorches;
 
 			this.minecraft.setScreen(parent);
 		}
