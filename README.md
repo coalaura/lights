@@ -2,11 +2,16 @@
 
 A lightweight, client-side Fabric mod that renders a light overlay to show exactly where mobs can spawn.
 
-![Light Overlay Example](https://github.com/coalaura/lights/blob/master/.github/overlay.png?raw=true)
+![Mob Spawn Overlay](https://github.com/coalaura/lights/blob/master/.github/overlay.png?raw=true)
+*Translucent red overlays indicate where monsters can spawn (block light 0).*
+
+![Optimal Torch Placement](https://github.com/coalaura/lights/blob/master/.github/torches.png?raw=true)
+*Translucent yellow markers show the most efficient locations for torch placement.*
 
 ## Features
 
-- Renders a red cross on blocks that are dark enough for monsters to spawn (block light level 0).
+- Renders a translucent red overlay on blocks that are dark enough for monsters to spawn (block light level 0).
+- **Optimal Torch Placement**: Calculates efficient locations for torches, rendered as golden markers, based on a fixed world grid to maximize coverage with minimal torches.
 - Smart scanning only highlights valid spawn locations (solid blocks with air above them).
 - Configurable **Visibility Modes**: Toggle (default), Hold or Always Show.
 - Performance-friendly, throttled area scanning to maintain high framerates.
@@ -24,6 +29,9 @@ Gleam supports [ModMenu](https://modrinth.com/mod/modmenu?version=1.21.10&loader
 
 Available settings:
 - **Visibility Mode**: Choose how the overlay is shown (**Hold** key, **Toggle** with key or **Always**).
+- **Optimal Torches**: Toggle the display of golden markers showing the most efficient locations for torch placement. These are fixed to a stable world grid and will not shift around as you move.
+- **Horizontal Radius**: The horizontal distance scanned around the player for dark blocks.
+- **Vertical Radius**: The vertical distance (up and down) scanned around the player for dark blocks.
 
 ## Installation
 
