@@ -1,0 +1,33 @@
+{
+	"schemaVersion": 1,
+	"id": "lights",
+	"version": "${version}",
+	"name": "Gleam",
+	"description": "Toggle on/off light level rendering.",
+	"authors": [
+		"coalaura"
+	],
+	"contact": {
+		"sources": "https://github.com/coalaura/lights"
+	},
+	"license": "GPL-3.0",
+	"icon": "assets/lights/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"org.wiese2.Lights"
+		],
+		"modmenu": [
+			"org.wiese2.modmenu.LightsModMenu"
+		]
+	},
+	"mixins": [
+		"lights.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.2",
+		"minecraft": "~1.21.10",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
