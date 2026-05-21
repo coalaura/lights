@@ -2,7 +2,7 @@
 
 A lightweight, client-side Fabric mod that renders a light overlay to show exactly where mobs can spawn.
 
-![Light Overlay Example](https://github.com/coalaura/gleam/blob/master/.github/overlay.png?raw=true)
+![Light Overlay Example](https://github.com/coalaura/lights/blob/master/.github/overlay.png?raw=true)
 
 ## Features
 
@@ -29,7 +29,7 @@ Available settings:
 
 1. Install [Fabric Loader](https://fabricmc.net/) for Minecraft 1.21.10.
 2. Download the [Fabric API](https://modrinth.com/mod/fabric-api?version=1.21.10) mod.
-3. Download the latest compiled `.jar` from the [Releases](https://github.com/coalaura/gleam/releases) page.
+3. Download the latest compiled `.jar` from the [Releases](https://github.com/coalaura/lights/releases) page.
 4. Place both `.jar` files into your `.minecraft/mods` folder.
 
 ## Requirements
